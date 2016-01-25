@@ -1,5 +1,5 @@
-*.txt
-*.pdf
-*.docx
-*.pptx
+*/*.txt
+*/*.pdf
+*/*.docx
+*/*.pptx
 
