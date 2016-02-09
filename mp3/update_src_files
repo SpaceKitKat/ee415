@@ -1,1 +1,1 @@
-scp bwg2@linux22.ee.washington.edu:/home/bwg2/EE415_Winter/mp3/*.v .
+scp bwg2@linux22.ee.washington.edu:/home/bwg2/EE415_Winter/mp3/*.v . &> suppressed_scp
