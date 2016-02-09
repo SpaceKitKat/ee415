@@ -13,7 +13,7 @@
 M1 OUT IN gnd gnd nmos w=0.72u l=0.24u
 M2 OUT IN VDD VDD pmos w=0.72u l=0.24u
 
-Cl OUT gnd 50f
+Cl OUT gnd 5f
 
 * sources
 Vvdd VDD gnd 'SUPP' 
