@@ -3,15 +3,15 @@
 `define _D_FLIPFLOP
 //-----------------------------------------------------
 module d_flipflop   (
- q     // Output signal 
-,d     // Data input
-,clk   // clock input
-,reset // reset input
+q,     // Output signal 
+d,     // Data input
+clk,   // clock input
+reset // reset input
 );
 //------------Input Ports-------------- 
-input logic d, clk, reset;
+input d, clk, reset;
 //------------Internal Variables--------
-output logic q;
+output reg q;
 //logic q; // holds state
 //-------------Code Starts Here-------
 always @(posedge clk)
