@@ -1,4 +1,4 @@
-`timescale 1ns/10ps
+`timescale 100ps/10ps
 `ifndef _D_FLIPFLOP
 `define _D_FLIPFLOP
 //-----------------------------------------------------
