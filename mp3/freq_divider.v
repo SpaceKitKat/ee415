@@ -27,11 +27,11 @@ assign q4b = ~q4;
 assign q5b = ~q5;
 
 d_flipflop FF2(q0,q0b,clk,reset);
-d_flipflop FF4(q1,q1b,q0,reset);
-d_flipflop FF8(q2,q2b,q1,reset);
-d_flipflop FF16(q3,q3b,q2,reset);
-d_flipflop FF32(q4,q4b,q3,reset);
-d_flipflop FF64(q5,q5b,q4,reset);
+d_flipflop FF4(q1,q1b,q0b,reset);
+d_flipflop FF8(q2,q2b,q1b,reset);
+d_flipflop FF16(q3,q3b,q2b,reset);
+d_flipflop FF32(q4,q4b,q3b,reset);
+d_flipflop FF64(q5,q5b,q4b,reset);
 
 endmodule 
 `endif
