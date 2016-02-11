@@ -1,14 +1,19 @@
-`timescale 100ns/10ps
+`timescale 100ps/10ps
 `include "freq_divider.v"
 
 module fdivider_test();
 
-wire    [5:0]fdiv; // frequency divisions: freq = clk/(2^(i+1))
+wire    f0,f1,f2,f3,f4,f5; // frequency divisions fn: freq = clk/(2^(n+1))
 reg     clk, reset;
 parameter CDELAY = 10; // clock period *100ps
 
 freq_divider dut(
-         .q(fdiv)      
+         .q0(f0)      
+        ,.q1(f1)
+        ,.q2(f2)
+        ,.q3(f3)
+        ,.q4(f4)
+        ,.q5(f5)
         ,.clk(clk)        
         ,.reset(reset)       
 );
@@ -23,6 +28,5 @@ end
 
 always begin
         #(CDELAY/2) clk <= !clk;
-	//clk2 = clk2 ^ clk; // get GHz, yo
 end
 endmodule

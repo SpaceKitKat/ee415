@@ -11,8 +11,8 @@ reset // reset input
 //------------Input Ports-------------- 
 input d, clk, reset;
 //------------Internal Variables--------
-output reg q;
-//logic q; // holds state
+output q;
+reg q;
 //-------------Code Starts Here-------
 always @(posedge clk)
 if (reset) begin // active high reset

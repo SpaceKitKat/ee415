@@ -1,29 +1,37 @@
 `timescale 100ps/10ps
 `ifndef _FREQ_DIVIDER
 `define _FREQ_DIVIDER
+`include "d_flipflop.v"
 //-----------------------------------------------------
 module freq_divider(
-q,    // output clk divisions (2-64)
+q0,    // output clk divisions (2-64)
+q1,
+q2,
+q3,
+q4,
+q5,
 clk,  // clock input
 reset // reset input
 );
 //------------Input Ports--------------- 
 input clk, reset;
 //------------Output Ports-------------- 
-output [5:0] q; //divided clock outputs
-wire [4:0] wq;  //output of each dff
+output q0,q1,q2,q3,q4,q5; //divided clock outputs
 //------------Flipflops-----------------
-d_flipflop FF2(q[0],!q[0],clk,reset);
-assign wq[0] = q[0];
-d_flipflop FF4(q[1],!q[1],wq[0],reset);
-assign wq[1] = q[1];
-d_flipflop FF8(q[2],!q[2],wq[1],reset);
-assign wq[2] = q[2];
-d_flipflop FF16(q[3],!q[3],wq[2],reset);
-assign wq[3] = q[3];
-d_flipflop FF32(q[4],!q[4],wq[3],reset);
-assign wq[4] = q[4];
-d_flipflop FF64(q[5],!q[5],wq[4],reset);
+wire q0b,q1b,q2b,q3b,q4b,q5b; 
+assign q0b = ~q0;
+assign q1b = ~q1;
+assign q2b = ~q2;
+assign q3b = ~q3;
+assign q4b = ~q4;
+assign q5b = ~q5;
+
+d_flipflop FF2(q0,q0b,clk,reset);
+d_flipflop FF4(q1,q1b,q0,reset);
+d_flipflop FF8(q2,q2b,q1,reset);
+d_flipflop FF16(q3,q3b,q2,reset);
+d_flipflop FF32(q4,q4b,q3,reset);
+d_flipflop FF64(q5,q5b,q4,reset);
 
 endmodule 
 `endif
