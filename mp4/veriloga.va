@@ -1,0 +1,30 @@
+// VerilogA for EE415, DFF_VA, Veriloga
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+
+// signal flow model of d-flipflop 
+// with reset.
+module DFF_VA(
+ q	// output signal
+,d	// data input
+,clk	// clock signal
+,reset) // reset signal
+  voltage  q,d,clk,reset; // declare discipline
+  input    clk,reset;	  // input vars
+  output   q;		  // output vars
+ 
+  integer bin_state;	  // 1 if V is higher than VDD/2
+			  // otherwise 0.
+
+  parameter integer clk_dir=1 from [-1:1] exlude 0; // clock rise 
+  parameter real VDD=1.1 from (0:inf);		    // source is 1.1V
+
+  analog begin
+    @cross(V(clk)-VDD/2, clk_dir) 		    // update state 
+      state = (V(d) > VDD/2);			    // @ +edge of clk
+    V(q) <+ transition(bin_state * VDD,0,0); 	    // output curr state
+  end
+
+endmodule
