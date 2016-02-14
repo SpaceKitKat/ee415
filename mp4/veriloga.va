@@ -6,25 +6,30 @@
 
 // signal flow model of d-flipflop 
 // with reset.
-module DFF_VA(
+module DFF_VA (
  q	// output signal
+,qb	// negation output
 ,d	// data input
 ,clk	// clock signal
-,reset) // reset signal
-  voltage  q,d,clk,reset; // declare discipline
-  input    clk,reset;	  // input vars
-  output   q;		  // output vars
+,reset); // reset signal
+  input clk,reset;	  // input vars
+  output q,qb;		  // output vars
+  voltage q,qb,d,clk,reset;  // declare discipline
  
   integer bin_state;	  // 1 if V is higher than VDD/2
 			  // otherwise 0.
 
-  parameter integer clk_dir=1 from [-1:1] exlude 0; // clock rise 
+  parameter integer clk_dir=1 from [-1:1] exclude 0; // clock rise 
   parameter real VDD=1.1 from (0:inf);		    // source is 1.1V
+  parameter real Vthresh=VDD/2 from (0:inf);	    // digital threshold 
 
-  analog begin
-    @cross(V(clk)-VDD/2, clk_dir) 		    // update state 
-      state = (V(d) > VDD/2);			    // @ +edge of clk
+
+  analog begin : main
+    // update state @ +edge of clk
+    @(cross (V(clk)-Vthresh, clk_dir))
+      bin_state = (V(d) > Vthresh);			    
     V(q) <+ transition(bin_state * VDD,0,0); 	    // output curr state
+    V(qb) <+ transition((1-bin_state) * VDD,0,0); 	    // output negation
   end
 
 endmodule
