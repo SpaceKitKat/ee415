@@ -1,0 +1,42 @@
+//Verilog-AMS HDL for "EE415", "dff_vams" "verilogams"
+
+`include "constants.vams"
+`include "disciplines.vams"
+`timescale 100ps/10ps
+
+module dff_vams (
+d,
+clk,
+q,
+qbar,
+reset);
+//--- Inputs ---//
+input d, clk, reset;
+logic d, clk, reset;
+//--- Outputs --//
+output q, qbar;
+electrical q, qbar;
+//--- Params --//
+real VDD=1.1;
+
+// on pos clock edge
+// if d === 1
+// q <+ Vcc
+// else 
+// q <+ 0.0
+
+// qbar <+ ~q
+
+analog begin
+  @(posedge(clk)) begin
+    if(d===1) 
+      V(q) <+ transition(VDD,0,0);
+    else
+      V(q) <+ transition(0,0,0);
+    
+    V(qbar) <+ VDD - V(q);
+  end
+end
+
+
+endmodule
