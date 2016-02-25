@@ -17,25 +17,31 @@ logic d, clk, reset;
 output q, qbar;
 electrical q, qbar;
 //--- Params --//
-real VDD=1.1;
+parameter real VDD=1.8;
+integer state;
 
-// on pos clock edge
-// if d === 1
-// q <+ Vcc
-// else 
-// q <+ 0.0
+analog begin : main
+  @(posedge(clk))
+    state = (d > 0)&(reset > 0);
 
-// qbar <+ ~q
+  V(q) <+ state*VDD;
+  V(qbar) <+ VDD - V(q);
 
-analog begin
-  @(posedge(clk)) begin
-    if(d===1) 
-      V(q) <+ transition(VDD,0,0);
-    else
-      V(q) <+ transition(0,0,0);
-    
-    V(qbar) <+ VDD - V(q);
-  end
+//  @(posedge(clk)) begin
+//    // store d in q
+//    if(reset==0) begin
+//      if(d==0)
+//	V(q) <+ VDD;
+//      else
+//	V(q) <+ 0.0;
+//      V(qbar) <+ VDD - V(q);
+//      end
+//    else begin
+//      V(q) <+ 0.0;
+//      V(qbar) <+ VDD;
+//      end
+//  end
+   
 end
 
 
