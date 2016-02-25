@@ -20,9 +20,10 @@ electrical q, qbar;
 parameter real VDD=1.8;
 integer state;
 
+
 analog begin : main
   @(posedge(clk))
-    state = (d > 0)&(reset > 0);
+    state = (d > 0);
 
   V(q) <+ state*VDD;
   V(qbar) <+ VDD - V(q);
@@ -46,3 +47,4 @@ end
 
 
 endmodule
+
