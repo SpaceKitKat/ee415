@@ -31,29 +31,38 @@ def find_match(lines):
       # get line mentioning delays
       delay_lines = re.findall(r''+DELAY_RE+NUMBER_RE,ll)
       if(len(delay_lines) != 0):
-         # print(delay_lines)
          # extract delay values from first two lines
          results[0] = re.findall(r''+NUMBER_RE,delay_lines[0])[0]
          results[1] = re.findall(r''+NUMBER_RE,delay_lines[1])[0]
          # make sure to return only when delay line has two numbers
-         # print(results)
          return results
 
    return None
 
 
 def main():
+   cum_logic_delay = 0
+   cum_net_delay = 0
+   cnt = 1
    #for all files in current directory
    for filename in glob.glob('./logfiles/*.txt'):
       # load and get lines
       lines = get_lines(filename)
-      # print( filename+":"+str(len(lines)) )
 
       # get numbers
       matches = find_match(lines)
 
-      # report file and numbers
-      print(filename)
+      # accumulate delays
+      if(matches != None):
+         cum_logic_delay += float(matches[0])
+         cum_net_delay += float(matches[1])
+         cnt += 1
+
+         # report file and numbers
+         print(filename+"\t"+matches[0]+"\t"+matches[1])
+
+   print("Average logic delay: "+str(cum_logic_delay/cnt))
+   print("Average logic delay: "+str(cum_net_delay/cnt))
 
    return
 
